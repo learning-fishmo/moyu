@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>传感器信号滤波仿真系统</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="ark-background">
+        <div class="ark-container">
+            <h1 class="ark-title">
+                <span class="glow">SENSOR SIGNAL FILTER</span>
+                <br>传感器信号滤波仿真系统
+            </h1>
+
+            <div class="tips-button-wrapper">
+                <button class="ark-tips-btn" id="autoTipsBtn">
+                    <span class="icon">💡</span> 自动化小知识
+                </button>
+            </div>
+
+            <div class="ark-panel">
+                <div class="control-group">
+                    <label>滤波算法</label>
+                    <select id="filterType" class="ark-input">
+                        <option value="mean">均值滤波</option>
+                        <option value="median">中值滤波</option>
+                        <option value="movingAverage">滑动平均</option>
+                        <option value="kalman">卡尔曼滤波</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>滤波窗口 <span id="windowValue">5</span></label>
+                    <input type="range" id="windowSize" min="1" max="20" value="5" class="ark-slider">
+                </div>
+
+                <div class="control-group">
+                    <label>噪声强度 <span id="noiseValue">10</span></label>
+                    <input type="range" id="noiseLevel" min="0" max="50" value="10" class="ark-slider">
+                </div>
+
+                <div class="ark-button-group">
+                    <button class="ark-btn start" id="startBtn">启动仿真</button>
+                    <button class="ark-btn stop" id="stopBtn">暂停</button>
+                    <button class="ark-btn reset" id="resetBtn">重置</button>
+                </div>
+            </div>
+
+            <div class="chart-wrapper">
+                <canvas id="filterChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- 明日方舟风格弹窗 -->
+    <div class="modal" id="tipsModal">
+        <div class="modal-card">
+            <span class="close">&times;</span>
+            <h3>💡 自动化小知识</h3>
+            <p id="tipsText"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
