@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言板 | 传感器滤波系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="ark-background">
+        <div class="ark-container">
+            <a href="index.html" class="back-btn">← 返回主页</a>
+
+            <h1 class="ark-title">
+                <span class="glow">MESSAGE BOARD</span>
+                <br>留言板
+            </h1>
+
+            <div class="message-board">
+                <input type="text" id="name" class="message-input" placeholder="输入你的昵称">
+                <textarea id="content" class="message-input message-textarea" placeholder="分享你的想法..."></textarea>
+                <button class="send-btn" id="send">发布留言</button>
+
+                <div class="message-list" id="messageList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const nameInput = document.getElementById('name');
+        const contentInput = document.getElementById('content');
+        const sendBtn = document.getElementById('send');
+        const messageList = document.getElementById('messageList');
+
+        function loadMessages() {
+            const ms = JSON.parse(localStorage.getItem('messages') || '[]');
+            messageList.innerHTML = '';
+            ms.reverse().forEach(m => {
+                const div = document.createElement('div');
+                div.className = 'message-item';
+                div.innerHTML = `
+                    <div class="message-name">${m.name}</div>
+                    <div class="message-content">${m.content}</div>
+                    <div class="message-time">${m.time}</div>
+                `;
+                messageList.appendChild(div);
+            });
+        }
+
+        sendBtn.addEventListener('click', () => {
+            const name = nameInput.value.trim();
+            const content = contentInput.value.trim();
+            if (!name || !content) return alert('请填写昵称和内容');
+            
+            const ms = JSON.parse(localStorage.getItem('messages') || '[]');
+            ms.push({
+                name, content,
+                time: new Date().toLocaleString()
+            });
+            localStorage.setItem('messages', JSON.stringify(ms));
+            
+            nameInput.value = '';
+            contentInput.value = '';
+            loadMessages();
+        });
+
+        loadMessages();
+    </script>
+</body>
+</html>
